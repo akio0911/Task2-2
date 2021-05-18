@@ -13,15 +13,8 @@ class ViewController: UIViewController {
     @IBOutlet private weak var textField2: UITextField!
     @IBOutlet private weak var resultLabel: UILabel!
     
-    var calcOperator = "+"
-    
-    @IBAction func segmentedControl(_ sender: UISegmentedControl) {
-        
-        calcOperator = sender.titleForSegment(at: sender.selectedSegmentIndex)!
-    
-    }
-    
-    
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+
     @IBAction func calclateButton(_ sender: UIButton) {
         
         let textArray: [UITextField] = [textField1, textField2]
@@ -29,32 +22,29 @@ class ViewController: UIViewController {
             .map{ $0.text ?? "" }
             .map{ Int($0) ?? 0 }
         
-        let calcText1 = calcArray[0]
-        let calcText2 = calcArray[1]
+        let number1 = calcArray[0]
+        let number2 = calcArray[1]
         
         
         let result: String?
         
-        switch calcOperator {
-        case "+":
-            result = String(calcText1 + calcText2)
-        case "-":
-            result = String(calcText1 - calcText2)
-        case "×":
-            result = String(calcText1 * calcText2)
-        case "÷":
-            if calcText2 == 0 {
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            result = String(number1 + number2)
+        case 1:
+            result = String(number1 - number2)
+        case 2:
+            result = String(number1 * number2)
+        case 3:
+            if number2 == 0 {
                 result = "0以外の数値で値を割ってください"
             } else {
-                result = String(calcText1 / calcText2)
+                result = String(number1 / number2)
             }
         default:
             result = "正しく計算されませんでした"
         }
         
         resultLabel.text = result ?? ""
-        
     }
-    
 }
-
